@@ -20,5 +20,4 @@ terraform.rc
 .env
 .ansible_vault_password
 inventory.yml
-ansible.cfg
 
