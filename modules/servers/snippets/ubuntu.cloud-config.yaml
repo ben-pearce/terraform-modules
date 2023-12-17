@@ -1,0 +1,5 @@
+#cloud-config
+runcmd:
+  - apt update
+  - apt install -y qemu-guest-agent net-tools
+  - systemctl enable --now qemu-guest-agent

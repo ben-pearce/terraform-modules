@@ -1,0 +1,3 @@
+default_user     = ""
+private_key_file = ""
+public_key_file  = ""
