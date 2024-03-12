@@ -37,7 +37,7 @@ resource "proxmox_virtual_environment_vm" "jessie" {
   network_device {
     bridge      = "vmbr0"
     vlan_id     = 10
-    mac_address = "02:00:00:00:1:00"
+    mac_address = "02:00:00:00:01:00"
   }
 
   provisioner "local-exec" {
