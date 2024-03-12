@@ -21,8 +21,8 @@ resource "proxmox_virtual_environment_vm" "jessie" {
   }
 
   memory {
-    dedicated = 16384
-    floating  = 16384
+    dedicated = 24576
+    floating  = 24576
   }
 
   disk {

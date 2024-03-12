@@ -21,8 +21,8 @@ resource "proxmox_virtual_environment_vm" "barbie" {
   }
 
   memory {
-    dedicated = 2048
-    floating  = 2048
+    dedicated = 3072
+    floating  = 3072
   }
 
   disk {
