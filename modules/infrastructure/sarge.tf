@@ -5,6 +5,7 @@ resource "proxmox_virtual_environment_vm" "sarge" {
   node_name = "pve"
   vm_id     = 106
   started   = false
+  bios      = "ovmf"
 
   startup {
     order      = "1"

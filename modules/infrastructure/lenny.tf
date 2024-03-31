@@ -10,6 +10,7 @@ resource "proxmox_virtual_environment_vm" "lenny" {
   node_name = "pve"
   vm_id     = 103
   started   = false
+  bios      = "ovmf"
 
   startup {
     order      = "1"
