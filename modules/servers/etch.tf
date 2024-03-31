@@ -4,6 +4,7 @@ resource "proxmox_virtual_environment_vm" "etch" {
 
   node_name = "pve"
   vm_id     = 102
+  bios      = "ovmf"
 
   clone {
     vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id

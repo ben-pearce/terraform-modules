@@ -4,6 +4,7 @@ resource "proxmox_virtual_environment_vm" "woody" {
 
   node_name = "pve"
   vm_id     = 200
+  bios      = "ovmf"
 
   clone {
     vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id

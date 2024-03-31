@@ -4,6 +4,7 @@ resource "proxmox_virtual_environment_vm" "sparks" {
 
   node_name = "pve"
   vm_id     = 104
+  bios      = "ovmf"
 
   clone {
     vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id
@@ -26,6 +27,29 @@ resource "proxmox_virtual_environment_vm" "sparks" {
     iothread     = true
     discard      = "on"
     size         = 120
+  }
+
+  initialization {
+    ip_config {
+      ipv4 {
+        address = "dhcp"
+      }
+    }
+
+    ip_config {
+      ipv4 {
+        address = "dhcp"
+      }
+    }
+
+    user_account {
+      keys     = [trimspace(file(var.public_key_file))]
+      password = random_password.ubuntu_vm_password.result
+      username = var.default_user
+    }
+
+    vendor_data_file_id = proxmox_virtual_environment_file.cloud_config.id
+    interface = "scsi0"
   }
 
   network_device {

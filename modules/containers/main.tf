@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source = "bpg/proxmox"
-      version = "0.40.0"
+      version = "0.48.1"
     }
   }
 }
@@ -74,6 +74,11 @@ resource "proxmox_virtual_environment_container" "lxc_ubuntu_jammy_template" {
     ignore_changes = [ description ]
   }
 
+  features {
+    fuse  = true
+    mount = ["nfs"]
+  }
+  
   # Can't automate yet :(
   # lxc.cgroup2.devices.allow: c 226:0 rwm
   # lxc.cgroup2.devices.allow: c 226:128 rwm

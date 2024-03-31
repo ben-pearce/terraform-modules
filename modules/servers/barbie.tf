@@ -4,6 +4,7 @@ resource "proxmox_virtual_environment_vm" "barbie" {
 
   node_name = "pve"
   vm_id     = 105
+  bios      = "ovmf"
 
   clone {
     vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id
@@ -21,8 +22,8 @@ resource "proxmox_virtual_environment_vm" "barbie" {
   }
 
   memory {
-    dedicated = 2048
-    floating  = 2048
+    dedicated = 4096
+    floating  = 4096
   }
 
   disk {

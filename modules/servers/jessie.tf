@@ -4,6 +4,7 @@ resource "proxmox_virtual_environment_vm" "jessie" {
 
   node_name = "pve"
   vm_id     = 100
+  bios      = "ovmf"
 
   clone {
     vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id
@@ -21,8 +22,8 @@ resource "proxmox_virtual_environment_vm" "jessie" {
   }
 
   memory {
-    dedicated = 16384
-    floating  = 16384
+    dedicated = 24576
+    floating  = 24576
   }
 
   disk {
@@ -37,7 +38,7 @@ resource "proxmox_virtual_environment_vm" "jessie" {
   network_device {
     bridge      = "vmbr0"
     vlan_id     = 10
-    mac_address = "02:00:00:00:1:00"
+    mac_address = "02:00:00:00:01:00"
   }
 
   provisioner "local-exec" {
