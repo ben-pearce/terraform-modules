@@ -1,13 +1,13 @@
 resource "proxmox_virtual_environment_vm" "etch" {
   name        = "etch"
-  tags        = ["internal", "jammy", "ubuntu"]
+  tags        = ["internal", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 102
   bios      = "ovmf"
 
   clone {
-    vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id
+    vm_id = proxmox_virtual_environment_vm.ubuntu_noble_template.id
   }
 
   cpu {
@@ -22,7 +22,7 @@ resource "proxmox_virtual_environment_vm" "etch" {
 
   disk {
     datastore_id = "local-lvm"
-    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image.id
+    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image_noble.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
