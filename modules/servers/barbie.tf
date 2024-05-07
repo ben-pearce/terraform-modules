@@ -1,13 +1,13 @@
 resource "proxmox_virtual_environment_vm" "barbie" {
   name        = "barbie"
-  tags        = ["internal", "jammy", "ubuntu"]
+  tags        = ["internal", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 105
   bios      = "ovmf"
 
   clone {
-    vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id
+    vm_id = proxmox_virtual_environment_vm.ubuntu_noble_template.id
   }
 
   startup {
@@ -28,11 +28,11 @@ resource "proxmox_virtual_environment_vm" "barbie" {
 
   disk {
     datastore_id = "local-lvm"
-    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image.id
+    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image_noble.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
-    size         = 10
+    size         = 64
   }
 
   network_device {
