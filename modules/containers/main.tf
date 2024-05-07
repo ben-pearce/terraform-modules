@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source = "bpg/proxmox"
-      version = "0.48.1"
+      version = "0.54.0"
     }
   }
 }
@@ -37,7 +37,7 @@ resource "proxmox_virtual_environment_container" "lxc_ubuntu_jammy_template" {
   node_name = "pve"
   vm_id     = 9003
   tags      = ["internal", "jammy", "lxc", "ubuntu"]
-
+ 
   template  = true
   started   = false
 
