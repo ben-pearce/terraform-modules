@@ -1,13 +1,13 @@
 resource "proxmox_virtual_environment_vm" "woody" {
   name        = "woody"
-  tags        = ["external", "jammy", "ubuntu"]
+  tags        = ["external", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 200
   bios      = "ovmf"
 
   clone {
-    vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id
+    vm_id = proxmox_virtual_environment_vm.ubuntu_noble_template.id
   }
 
   cpu {
