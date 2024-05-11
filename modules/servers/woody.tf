@@ -32,6 +32,28 @@ resource "proxmox_virtual_environment_vm" "woody" {
   initialization {
     vendor_data_file_id = proxmox_virtual_environment_file.cloud_config_vdb.id
     interface = "scsi0"
+
+    user_account {
+      keys     = [trimspace(file(var.public_key_file))]
+      password = random_password.ubuntu_vm_password.result
+      username = var.default_user
+    }
+
+    ip_config {
+      ipv4 {
+        address = "dhcp"
+      }
+    }
+  }
+
+  agent {
+    enabled = true
+  }
+
+  efi_disk {
+    datastore_id      = "local-lvm"
+    type              = "4m"
+    pre_enrolled_keys = true
   }
 
   clone {
@@ -78,6 +100,10 @@ resource "proxmox_virtual_environment_vm" "woody" {
 
   provisioner "local-exec" {
     command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible-playbooks/woody.yml"
+  }
+
+  lifecycle {
+    ignore_changes = [ clone ]
   }
 
   depends_on = [ 
