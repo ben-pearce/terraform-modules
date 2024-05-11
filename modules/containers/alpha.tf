@@ -1,10 +1,10 @@
-resource "proxmox_virtual_environment_container" "jellyfin_ffmpeg" {
+resource "proxmox_virtual_environment_container" "alpha" {
   node_name   = "pve"
   vm_id       = 1000
   tags        = ["internal", "jammy", "lxc", "ubuntu"]
 
   initialization {
-    hostname = "jellyfin-ffmpeg"
+    hostname = "alpha"
 
     ip_config {
       ipv4 {
@@ -45,6 +45,6 @@ resource "proxmox_virtual_environment_container" "jellyfin_ffmpeg" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ubuntu --private-key ${var.private_key_file} ansible-playbooks/jellyfin_ffmpeg.yml"
+    command = "ansible-playbook -u ubuntu --private-key ${var.private_key_file} ansible-playbooks/alpha.yml"
   }
 }

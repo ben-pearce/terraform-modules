@@ -75,15 +75,10 @@ resource "proxmox_virtual_environment_container" "lxc_ubuntu_jammy_template" {
   }
 
   features {
-    fuse  = true
-    mount = ["nfs"]
+    fuse    = true
+    mount   = ["nfs"]
+    nesting = true
   }
   
-  # Can't automate yet :(
-  # lxc.cgroup2.devices.allow: c 226:0 rwm
-  # lxc.cgroup2.devices.allow: c 226:128 rwm
-  # lxc.cgroup2.devices.allow: c 29:0 rwm
-  # lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
-  # lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file
-
 }
+
