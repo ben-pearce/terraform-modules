@@ -22,7 +22,6 @@ resource "proxmox_virtual_environment_vm" "etch" {
 
   disk {
     datastore_id = "local-lvm"
-    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image_noble.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"

@@ -50,7 +50,6 @@ resource "proxmox_virtual_environment_vm" "woody" {
 
   disk {
     datastore_id = "local-lvm"
-    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
