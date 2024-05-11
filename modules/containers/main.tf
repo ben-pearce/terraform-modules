@@ -82,3 +82,12 @@ resource "proxmox_virtual_environment_container" "lxc_ubuntu_jammy_template" {
   
 }
 
+resource "proxmox_virtual_environment_file" "ubuntu_noble_container_template" {
+  content_type = "vztmpl"
+  datastore_id = "local"
+  node_name    = "pve"
+
+  source_file {
+    path = "http://download.proxmox.com/images/system/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
+  }
+}
