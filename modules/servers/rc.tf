@@ -1,3 +1,26 @@
+resource "proxmox_virtual_environment_vm" "rc_data" {
+  name      = "rc-data"
+  tags      = ["data-only"]
+  
+  node_name = "pve"
+  vm_id     = 5201
+
+  started   = false
+  on_boot   = false
+  template  = true
+  
+  disk {
+    datastore_id = "local-lvm"
+    interface    = "virtio0"
+    file_format  = "raw"
+    size         = 5
+  }
+
+  lifecycle {
+    ignore_changes = [ startup, cpu, memory ]
+  }
+}
+
 resource "proxmox_virtual_environment_vm" "rc" {
   name        = "rc"
   tags        = ["external", "jammy", "ubuntu"]
