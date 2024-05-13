@@ -1,6 +1,6 @@
 resource "proxmox_virtual_environment_vm" "woody_data" {
   name      = "woody-data"
-  tags      = ["internal", "data-only"]
+  tags      = ["data-only"]
   
   node_name = "pve"
   vm_id     = 5200
