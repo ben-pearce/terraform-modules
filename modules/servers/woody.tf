@@ -50,6 +50,16 @@ resource "proxmox_virtual_environment_vm" "woody" {
     enabled = true
   }
 
+  operating_system {
+    type = "l26"
+  }
+
+  startup {
+    order      = "1"
+    up_delay   = "60"
+    down_delay = "60"
+  }
+
   efi_disk {
     datastore_id      = "local-lvm"
     type              = "4m"
