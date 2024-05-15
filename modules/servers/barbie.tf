@@ -42,6 +42,6 @@ resource "proxmox_virtual_environment_vm" "barbie" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible-playbooks/barbie.yml"
+    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible/barbie.yml"
   }
 }

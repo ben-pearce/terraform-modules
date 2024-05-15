@@ -35,7 +35,7 @@ resource "proxmox_virtual_environment_vm" "etch" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible-playbooks/etch.yml"
+    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible/etch.yml"
   }
 
   depends_on = [ proxmox_virtual_environment_vm.barbie ]
