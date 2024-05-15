@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source = "bpg/proxmox"
-      version = "0.54.0"
+      version = "0.56.1"
     }
   }
 }
@@ -75,15 +75,19 @@ resource "proxmox_virtual_environment_container" "lxc_ubuntu_jammy_template" {
   }
 
   features {
-    fuse  = true
-    mount = ["nfs"]
+    fuse    = true
+    mount   = ["nfs"]
+    nesting = true
   }
   
-  # Can't automate yet :(
-  # lxc.cgroup2.devices.allow: c 226:0 rwm
-  # lxc.cgroup2.devices.allow: c 226:128 rwm
-  # lxc.cgroup2.devices.allow: c 29:0 rwm
-  # lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
-  # lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file
+}
 
+resource "proxmox_virtual_environment_file" "ubuntu_noble_container_template" {
+  content_type = "vztmpl"
+  datastore_id = "local"
+  node_name    = "pve"
+
+  source_file {
+    path = "http://download.proxmox.com/images/system/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
+  }
 }

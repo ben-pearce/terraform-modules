@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source = "bpg/proxmox"
-      version = "0.54.0"
+      version = "0.56.1"
     }
   }
 }
@@ -23,6 +23,6 @@ resource "proxmox_virtual_environment_file" "proxmox_backup_server_iso" {
   node_name    = "pve"
 
   source_file {
-    path = "https://enterprise.proxmox.com/iso/proxmox-backup-server_3.0-1.iso"
+    path = "https://enterprise.proxmox.com/iso/proxmox-backup-server_3.2-1.iso"
   }
 }

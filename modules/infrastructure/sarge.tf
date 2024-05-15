@@ -5,12 +5,27 @@ resource "proxmox_virtual_environment_vm" "sarge" {
   node_name = "pve"
   vm_id     = 106
   started   = false
+  on_boot   = true
   bios      = "ovmf"
 
+  agent {
+    enabled = true
+  }
+
+  operating_system {
+    type = "l26"
+  }
+
   startup {
-    order      = "1"
+    order      = "2"
     up_delay   = "60"
     down_delay = "60"
+  }
+
+  efi_disk {
+    datastore_id      = "local-lvm"
+    type              = "4m"
+    pre_enrolled_keys = true
   }
 
   cpu {
@@ -24,16 +39,17 @@ resource "proxmox_virtual_environment_vm" "sarge" {
   }
   
   cdrom {
-    enabled = true
-    file_id = proxmox_virtual_environment_file.proxmox_backup_server_iso.id
+    enabled   = true
+    file_id   = proxmox_virtual_environment_file.proxmox_backup_server_iso.id
   }
 
   disk {
     datastore_id = "local-lvm"
     interface    = "virtio0"
+    file_format  = "raw"
     iothread     = true
     discard      = "on"
-    size         = 32
+    size         = 10
   }
 
   network_device {
