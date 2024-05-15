@@ -45,6 +45,6 @@ resource "proxmox_virtual_environment_container" "alpha" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ubuntu --private-key ${var.private_key_file} ansible-playbooks/alpha.yml"
+    command = "ansible-playbook -u ubuntu --private-key ${var.private_key_file} ansible/alpha.yml"
   }
 }

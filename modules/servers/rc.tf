@@ -109,7 +109,7 @@ resource "proxmox_virtual_environment_vm" "rc" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible-playbooks/rc.yml"
+    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible/rc.yml"
   }
 
   lifecycle {

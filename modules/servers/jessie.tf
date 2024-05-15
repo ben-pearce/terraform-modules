@@ -65,7 +65,7 @@ resource "proxmox_virtual_environment_vm" "jessie" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible-playbooks/jessie.yml"
+    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible/jessie.yml"
   }
 
   depends_on = [ proxmox_virtual_environment_vm.barbie ]

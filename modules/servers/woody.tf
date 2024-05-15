@@ -109,7 +109,7 @@ resource "proxmox_virtual_environment_vm" "woody" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible-playbooks/woody.yml"
+    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible/woody.yml"
   }
 
   lifecycle {
