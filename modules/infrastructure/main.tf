@@ -13,7 +13,7 @@ resource "proxmox_virtual_environment_file" "truenas_iso" {
   node_name    = "pve"
 
   source_file {
-    path = "https://download-core.sys.truenas.net/13.0/STABLE/U5.3/x64/TrueNAS-13.0-U5.3.iso"
+    path = "https://download-core.sys.truenas.net/13.0/STABLE/U6.1/x64/TrueNAS-13.0-U6.1.iso"
   }
 }
 
