@@ -33,12 +33,19 @@ resource "proxmox_virtual_environment_vm" "lenny" {
   node_name = "pve"
   vm_id     = 103
   started   = false
-  bios      = "ovmf"
+  on_boot   = true
+  bios      = "seabios"
 
   startup {
     order      = "1"
     up_delay   = "60"
     down_delay = "60"
+  }
+
+  efi_disk {
+    datastore_id      = "local-lvm"
+    type              = "4m"
+    pre_enrolled_keys = true
   }
 
   cpu {
@@ -68,6 +75,14 @@ resource "proxmox_virtual_environment_vm" "lenny" {
   dynamic "disk" {
     for_each = var.truenas_disk_ids
     content {
+      datastore_id        = ""
+      interface           = "virtio${disk.key + 1}"
+      path_in_datastore   = "/dev/disk/by-id/${disk.value}"
+      backup              = false
+      file_format         = "raw"
+      size                = 9314
+    }
+  }
 
   dynamic "disk" {
     for_each = { for idx, val in proxmox_virtual_environment_vm.lenny_data.disk : idx => val }
@@ -88,6 +103,10 @@ resource "proxmox_virtual_environment_vm" "lenny" {
     bridge      = "vmbr0"
     vlan_id     = 10
     mac_address = "02:00:00:00:01:03"
+  }
+
+  lifecycle {
+    ignore_changes = [ started ]
   }
 
 }
