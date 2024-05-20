@@ -23,26 +23,26 @@ resource "random_password" "ubuntu_lxc_password" {
   special          = true
 }
 
-resource "proxmox_virtual_environment_file" "ubuntu_container_template" {
+resource "proxmox_virtual_environment_file" "ubuntu_noble_container_template" {
   content_type = "vztmpl"
   datastore_id = "local"
   node_name    = "pve"
 
   source_file {
-    path = "http://download.proxmox.com/images/system/ubuntu-22.04-standard_22.04-1_amd64.tar.zst"
+    path = "http://download.proxmox.com/images/system/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
   }
 }
 
-resource "proxmox_virtual_environment_container" "lxc_ubuntu_jammy_template" {
+resource "proxmox_virtual_environment_container" "lxc_ubuntu_noble_template" {
   node_name = "pve"
-  vm_id     = 9003
-  tags      = ["internal", "jammy", "lxc", "ubuntu"]
+  vm_id     = 9005
+  tags      = ["internal", "noble", "lxc", "ubuntu"]
  
   template  = true
   started   = false
 
   initialization {
-    hostname = "lxc-ubuntu-jammy-template"
+    hostname = "lxc-ubuntu-noble-template"
 
     ip_config {
       ipv4 {
@@ -61,7 +61,7 @@ resource "proxmox_virtual_environment_container" "lxc_ubuntu_jammy_template" {
   }
 
   operating_system {
-    template_file_id = proxmox_virtual_environment_file.ubuntu_container_template.id
+    template_file_id = proxmox_virtual_environment_file.ubuntu_noble_container_template.id
     type             = "ubuntu"
   }
 
@@ -80,14 +80,4 @@ resource "proxmox_virtual_environment_container" "lxc_ubuntu_jammy_template" {
     nesting = true
   }
   
-}
-
-resource "proxmox_virtual_environment_file" "ubuntu_noble_container_template" {
-  content_type = "vztmpl"
-  datastore_id = "local"
-  node_name    = "pve"
-
-  source_file {
-    path = "http://download.proxmox.com/images/system/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
-  }
 }

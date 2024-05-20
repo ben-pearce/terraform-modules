@@ -1,7 +1,7 @@
 resource "proxmox_virtual_environment_container" "alpha" {
   node_name   = "pve"
   vm_id       = 1000
-  tags        = ["internal", "jammy", "lxc", "ubuntu"]
+  tags        = ["internal", "noble", "lxc", "ubuntu"]
 
   initialization {
     hostname = "alpha"
@@ -16,7 +16,7 @@ resource "proxmox_virtual_environment_container" "alpha" {
   clone {
     node_name     = "pve"
     datastore_id  = "local-lvm"
-    vm_id         = proxmox_virtual_environment_container.lxc_ubuntu_jammy_template.id
+    vm_id         = proxmox_virtual_environment_container.lxc_ubuntu_noble_template.id
   }
 
   startup {
