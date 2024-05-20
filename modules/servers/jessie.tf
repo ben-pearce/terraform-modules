@@ -23,8 +23,11 @@ resource "proxmox_virtual_environment_vm" "jessie_data" {
 
 resource "proxmox_virtual_environment_vm" "jessie" {
   name        = "jessie"
-  tags        = ["internal", "jammy", "ubuntu"]
+  tags        = ["internal", "noble", "ubuntu"]
 
+  node_name   = "pve"
+  vm_id       = 100
+  bios        = "ovmf"
 
   initialization {
     vendor_data_file_id = proxmox_virtual_environment_file.cloud_config_vdb.id
@@ -44,7 +47,7 @@ resource "proxmox_virtual_environment_vm" "jessie" {
   }
 
   clone {
-    vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id
+    vm_id = proxmox_virtual_environment_vm.ubuntu_noble_template.id
   }
 
   startup {
@@ -65,7 +68,6 @@ resource "proxmox_virtual_environment_vm" "jessie" {
 
   disk {
     datastore_id = "local-lvm"
-    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
