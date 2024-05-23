@@ -13,7 +13,7 @@ resource "proxmox_virtual_environment_vm" "rc_data" {
     datastore_id = "local-lvm"
     interface    = "virtio0"
     file_format  = "raw"
-    size         = 10
+    size         = 16
   }
 
   lifecycle {

@@ -58,4 +58,8 @@ resource "proxmox_virtual_environment_vm" "sarge" {
     mac_address = "02:00:00:00:01:06"
   }
 
+  lifecycle {
+    ignore_changes = [ started ]
+  }
+
 }
