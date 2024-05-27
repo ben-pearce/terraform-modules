@@ -25,7 +25,7 @@ resource "proxmox_virtual_environment_vm" "sparks" {
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
-    size         = 120
+    size         = 32
   }
 
   initialization {
