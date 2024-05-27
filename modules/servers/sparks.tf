@@ -64,7 +64,7 @@ resource "proxmox_virtual_environment_vm" "sparks" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible-playbooks/sparks.yml"
+    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible/sparks.yml"
   }
 
   depends_on = [ proxmox_virtual_environment_vm.barbie ]
