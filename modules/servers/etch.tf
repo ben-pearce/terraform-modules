@@ -30,7 +30,6 @@ resource "proxmox_virtual_environment_vm" "etch" {
 
   network_device {
     bridge      = "vmbr0"
-    vlan_id     = 10
     mac_address = "02:00:00:00:01:02"
   }
 

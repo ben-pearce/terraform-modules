@@ -104,7 +104,7 @@ resource "proxmox_virtual_environment_vm" "woody" {
 
   network_device {
     bridge      = "vmbr0"
-    vlan_id     = 20
+    vlan_id     = 200
     mac_address = "02:00:00:00:02:00"
   }
 
