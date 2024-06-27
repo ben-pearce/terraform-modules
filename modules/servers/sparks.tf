@@ -1,13 +1,13 @@
 resource "proxmox_virtual_environment_vm" "sparks" {
   name        = "sparks"
-  tags        = ["internal", "jammy", "ubuntu"]
+  tags        = ["internal", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 104
   bios      = "ovmf"
 
   clone {
-    vm_id = proxmox_virtual_environment_vm.ubuntu_jammy_template.id
+    vm_id = proxmox_virtual_environment_vm.ubuntu_noble_template.id
   }
 
   cpu {
@@ -22,11 +22,10 @@ resource "proxmox_virtual_environment_vm" "sparks" {
 
   disk {
     datastore_id = "local-lvm"
-    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
-    size         = 120
+    size         = 32
   }
 
   initialization {
@@ -65,7 +64,7 @@ resource "proxmox_virtual_environment_vm" "sparks" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible-playbooks/sparks.yml"
+    command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible/sparks.yml"
   }
 
   depends_on = [ proxmox_virtual_environment_vm.barbie ]

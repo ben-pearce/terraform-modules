@@ -32,7 +32,7 @@ resource "proxmox_virtual_environment_vm" "barbie" {
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
-    size         = 64
+    size         = 24
   }
 
   network_device {

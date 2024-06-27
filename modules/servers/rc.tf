@@ -85,7 +85,7 @@ resource "proxmox_virtual_environment_vm" "rc" {
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
-    size         = 5
+    size         = 8
   }
 
   dynamic "disk" {
@@ -104,7 +104,7 @@ resource "proxmox_virtual_environment_vm" "rc" {
 
   network_device {
     bridge      = "vmbr0"
-    vlan_id     = 20
+    vlan_id     = 200
     mac_address = "02:00:00:00:02:01"
   }
 
