@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source = "bpg/proxmox"
-      version = "0.57.0"
+      version = "0.66.2"
     }
   }
 }
@@ -94,8 +94,9 @@ resource "proxmox_virtual_environment_vm" "debian_bookworm_template" {
   }
 
   cpu {
-    cores = 2
-    type  = "host"
+    cores         = 2
+    type          = "host"
+    architecture  = "x86_64"
   }
 
   memory {
@@ -175,8 +176,9 @@ resource "proxmox_virtual_environment_vm" "ubuntu_noble_template" {
   }
 
   cpu {
-    cores = 2
-    type  = "host"
+    cores         = 2
+    type          = "host"
+    architecture  = "x86_64"
   }
 
   memory {

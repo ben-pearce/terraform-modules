@@ -57,8 +57,9 @@ resource "proxmox_virtual_environment_vm" "jessie" {
   }
 
   cpu {
-    cores = 8
-    type  = "host"
+    cores         = 8
+    type          = "host"
+    architecture  = "x86_64"
   }
 
   memory {

@@ -49,8 +49,9 @@ resource "proxmox_virtual_environment_vm" "lenny" {
   }
 
   cpu {
-    cores = 4
-    type  = "host"
+    cores         = 4
+    type          = "host"
+    architecture  = "x86_64"
   }
 
   memory {
