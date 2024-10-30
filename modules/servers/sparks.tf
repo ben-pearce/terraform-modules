@@ -11,8 +11,9 @@ resource "proxmox_virtual_environment_vm" "sparks" {
   }
 
   cpu {
-    cores = 16
-    type  = "host"
+    cores         = 16
+    type          = "host"
+    architecture  = "x86_64"
   }
 
   memory {

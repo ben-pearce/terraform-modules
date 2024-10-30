@@ -29,8 +29,9 @@ resource "proxmox_virtual_environment_vm" "sarge" {
   }
 
   cpu {
-    cores = 2
-    type  = "host"
+    cores         = 2
+    type          = "host"
+    architecture  = "x86_64"
   }
 
   memory {

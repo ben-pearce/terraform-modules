@@ -18,7 +18,7 @@ resource "proxmox_virtual_environment_vm" "lenny_data" {
     datastore_id = "local-lvm"
     interface    = "virtio0"
     file_format  = "raw"
-    size         = 64
+    size         = 256
   }
 
   lifecycle {
@@ -49,8 +49,9 @@ resource "proxmox_virtual_environment_vm" "lenny" {
   }
 
   cpu {
-    cores = 4
-    type  = "host"
+    cores         = 4
+    type          = "host"
+    architecture  = "x86_64"
   }
 
   memory {

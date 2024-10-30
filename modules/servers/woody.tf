@@ -71,8 +71,9 @@ resource "proxmox_virtual_environment_vm" "woody" {
   }
 
   cpu {
-    cores = 6
-    type  = "host"
+    cores         = 6
+    type          = "host"
+    architecture  = "x86_64"
   }
 
   memory {
