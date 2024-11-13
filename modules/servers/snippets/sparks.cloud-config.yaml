@@ -1,0 +1,27 @@
+#cloud-config
+runcmd:
+  - apt update
+  - apt install -y qemu-guest-agent net-tools
+  - systemctl enable --now qemu-guest-agent
+
+mounts:
+  - [ vdb, /home, ext4, "defaults", "0", "1" ]
+  - [ vdc, /mnt/data, ext4, "defaults", "0", "1" ]
+
+disk_setup:
+  /dev/vdb:
+    table_type: gpt
+    layout: True
+    overwrite: False
+  /dev/vdc:
+    table_type: gpt
+    layout: True
+    overwrite: False
+
+fs_setup:
+  - device: /dev/vdb
+    partition: 1
+    filesystem: ext4
+  - device: /dev/vdc
+    partition: 1
+    filesystem: ext4
