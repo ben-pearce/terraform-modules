@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk add ansible opentofu
+RUN apk add openssh-client ansible opentofu
 
 WORKDIR /modules
 
