@@ -40,8 +40,7 @@ resource "proxmox_virtual_environment_vm" "sarge" {
   }
   
   cdrom {
-    enabled   = true
-    file_id   = proxmox_virtual_environment_file.proxmox_backup_server_iso.id
+    file_id = proxmox_virtual_environment_file.proxmox_backup_server_iso.id
   }
 
   disk {

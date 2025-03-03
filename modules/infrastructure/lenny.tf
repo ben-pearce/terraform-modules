@@ -60,7 +60,6 @@ resource "proxmox_virtual_environment_vm" "lenny" {
   }
   
   cdrom {
-    enabled = true
     file_id = proxmox_virtual_environment_file.truenas_iso.id
   }
 
