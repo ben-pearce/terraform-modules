@@ -1,6 +1,7 @@
 resource "proxmox_virtual_environment_vm" "barbie" {
-  name        = "barbie"
-  tags        = ["internal", "noble", "ubuntu"]
+  name                = "barbie"
+  reboot_after_update = true
+  tags                = ["internal", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 105
@@ -17,9 +18,9 @@ resource "proxmox_virtual_environment_vm" "barbie" {
   }
 
   cpu {
-    cores         = 2
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 2
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {

@@ -4,16 +4,17 @@ variable "truenas_disk_ids" {
 }
 
 resource "proxmox_virtual_environment_vm" "lenny_data" {
-  name      = "lenny-data"
-  tags      = ["data-only"]
-  
+  name                = "lenny-data"
+  reboot_after_update = false
+  tags                = ["data-only"]
+
   node_name = "pve"
   vm_id     = 5102
 
-  started   = false
-  on_boot   = false
-  template  = true
-  
+  started  = false
+  on_boot  = false
+  template = true
+
   disk {
     datastore_id = "local-lvm"
     interface    = "virtio0"
@@ -22,13 +23,14 @@ resource "proxmox_virtual_environment_vm" "lenny_data" {
   }
 
   lifecycle {
-    ignore_changes = [ startup, cpu, memory ]
+    ignore_changes = [startup, cpu, memory]
   }
 }
 
 resource "proxmox_virtual_environment_vm" "lenny" {
-  name        = "lenny"
-  tags        = ["internal"]
+  name                = "lenny"
+  reboot_after_update = true
+  tags                = ["internal"]
 
   node_name = "pve"
   vm_id     = 103
@@ -49,16 +51,16 @@ resource "proxmox_virtual_environment_vm" "lenny" {
   }
 
   cpu {
-    cores         = 4
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 4
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {
     dedicated = 16384
     floating  = 16384
   }
-  
+
   cdrom {
     file_id = proxmox_virtual_environment_file.truenas_iso.id
   }
@@ -75,12 +77,12 @@ resource "proxmox_virtual_environment_vm" "lenny" {
   dynamic "disk" {
     for_each = var.truenas_disk_ids
     content {
-      datastore_id        = ""
-      interface           = "virtio${disk.key + 1}"
-      path_in_datastore   = "/dev/disk/by-id/${disk.value}"
-      backup              = false
-      file_format         = "raw"
-      size                = 9314
+      datastore_id      = ""
+      interface         = "virtio${disk.key + 1}"
+      path_in_datastore = "/dev/disk/by-id/${disk.value}"
+      backup            = false
+      file_format       = "raw"
+      size              = 9314
     }
   }
 
@@ -106,7 +108,7 @@ resource "proxmox_virtual_environment_vm" "lenny" {
   }
 
   lifecycle {
-    ignore_changes = [ started ]
+    ignore_changes = [started]
   }
 
 }

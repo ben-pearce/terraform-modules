@@ -1,14 +1,15 @@
 resource "proxmox_virtual_environment_vm" "jessie_data" {
-  name      = "jessie-data"
-  tags      = ["data-only"]
-  
+  name                = "jessie-data"
+  reboot_after_update = false
+  tags                = ["data-only"]
+
   node_name = "pve"
   vm_id     = 5100
 
-  started   = false
-  on_boot   = false
-  template  = true
-  
+  started  = false
+  on_boot  = false
+  template = true
+
   disk {
     datastore_id = "local-lvm"
     interface    = "virtio0"
@@ -17,21 +18,22 @@ resource "proxmox_virtual_environment_vm" "jessie_data" {
   }
 
   lifecycle {
-    ignore_changes = [ startup, cpu, memory ]
+    ignore_changes = [startup, cpu, memory]
   }
 }
 
 resource "proxmox_virtual_environment_vm" "jessie" {
-  name        = "jessie"
-  tags        = ["internal", "noble", "ubuntu"]
+  name                = "jessie"
+  reboot_after_update = true
+  tags                = ["internal", "noble", "ubuntu"]
 
-  node_name   = "pve"
-  vm_id       = 100
-  bios        = "ovmf"
+  node_name = "pve"
+  vm_id     = 100
+  bios      = "ovmf"
 
   initialization {
     vendor_data_file_id = proxmox_virtual_environment_file.cloud_config_vdb.id
-    interface = "scsi0"
+    interface           = "scsi0"
 
     user_account {
       keys     = [trimspace(file(var.public_key_file))]
@@ -57,9 +59,9 @@ resource "proxmox_virtual_environment_vm" "jessie" {
   }
 
   cpu {
-    cores         = 8
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 8
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {
@@ -99,8 +101,8 @@ resource "proxmox_virtual_environment_vm" "jessie" {
     command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible/jessie.yml"
   }
 
-  depends_on = [ 
+  depends_on = [
     proxmox_virtual_environment_vm.jessie_data,
-    proxmox_virtual_environment_vm.barbie 
+    proxmox_virtual_environment_vm.barbie
   ]
 }

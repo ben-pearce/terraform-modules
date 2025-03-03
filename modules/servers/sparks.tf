@@ -4,22 +4,23 @@ resource "proxmox_virtual_environment_file" "cloud_config_sparks" {
   node_name    = "pve"
 
   source_raw {
-    data = file("${path.module}/snippets/sparks.cloud-config.yaml")
+    data      = file("${path.module}/snippets/sparks.cloud-config.yaml")
     file_name = "sparks.cloud-config.yaml"
   }
 }
 
 resource "proxmox_virtual_environment_vm" "sparks_data" {
-  name      = "sparks-data"
-  tags      = ["data-only"]
-  
+  name                = "sparks-data"
+  reboot_after_update = false
+  tags                = ["data-only"]
+
   node_name = "pve"
   vm_id     = 5104
 
-  started   = false
-  on_boot   = false
-  template  = true
-  
+  started  = false
+  on_boot  = false
+  template = true
+
   disk {
     datastore_id = "local-lvm"
     interface    = "virtio0"
@@ -35,13 +36,14 @@ resource "proxmox_virtual_environment_vm" "sparks_data" {
   }
 
   lifecycle {
-    ignore_changes = [ startup, cpu, memory ]
+    ignore_changes = [startup, cpu, memory]
   }
 }
 
 resource "proxmox_virtual_environment_vm" "sparks" {
-  name        = "sparks"
-  tags        = ["internal", "noble", "ubuntu"]
+  name                = "sparks"
+  reboot_after_update = true
+  tags                = ["internal", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 104
@@ -52,9 +54,9 @@ resource "proxmox_virtual_environment_vm" "sparks" {
   }
 
   cpu {
-    cores         = 16
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 16
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {
@@ -104,7 +106,7 @@ resource "proxmox_virtual_environment_vm" "sparks" {
     }
 
     vendor_data_file_id = proxmox_virtual_environment_file.cloud_config_sparks.id
-    interface = "scsi0"
+    interface           = "scsi0"
   }
 
   network_device {
@@ -125,6 +127,6 @@ resource "proxmox_virtual_environment_vm" "sparks" {
 
   depends_on = [
     proxmox_virtual_environment_vm.sparks_data,
-    proxmox_virtual_environment_vm.barbie 
+    proxmox_virtual_environment_vm.barbie
   ]
 }

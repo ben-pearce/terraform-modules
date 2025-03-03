@@ -1,6 +1,7 @@
 resource "proxmox_virtual_environment_vm" "etch" {
-  name        = "etch"
-  tags        = ["internal", "noble", "ubuntu"]
+  name                = "etch"
+  reboot_after_update = true
+  tags                = ["internal", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 102
@@ -11,9 +12,9 @@ resource "proxmox_virtual_environment_vm" "etch" {
   }
 
   cpu {
-    cores         = 2
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 2
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {
@@ -38,5 +39,5 @@ resource "proxmox_virtual_environment_vm" "etch" {
     command = "ansible-playbook -u ${var.default_user} --private-key ${var.private_key_file} ansible/etch.yml"
   }
 
-  depends_on = [ proxmox_virtual_environment_vm.barbie ]
+  depends_on = [proxmox_virtual_environment_vm.barbie]
 }
