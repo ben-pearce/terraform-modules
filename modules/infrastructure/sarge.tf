@@ -1,6 +1,7 @@
 resource "proxmox_virtual_environment_vm" "sarge" {
-  name        = "sarge"
-  tags        = ["internal"]
+  name                = "sarge"
+  reboot_after_update = true
+  tags                = ["internal"]
 
   node_name = "pve"
   vm_id     = 106
@@ -29,19 +30,18 @@ resource "proxmox_virtual_environment_vm" "sarge" {
   }
 
   cpu {
-    cores         = 2
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 2
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {
     dedicated = 2048
     floating  = 2048
   }
-  
+
   cdrom {
-    enabled   = true
-    file_id   = proxmox_virtual_environment_file.proxmox_backup_server_iso.id
+    file_id = proxmox_virtual_environment_file.proxmox_backup_server_iso.id
   }
 
   disk {
@@ -60,7 +60,7 @@ resource "proxmox_virtual_environment_vm" "sarge" {
   }
 
   lifecycle {
-    ignore_changes = [ started ]
+    ignore_changes = [started]
   }
 
 }

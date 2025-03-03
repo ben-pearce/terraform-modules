@@ -1,14 +1,15 @@
 resource "proxmox_virtual_environment_vm" "rc_data" {
-  name      = "rc-data"
-  tags      = ["data-only"]
-  
+  name                = "rc-data"
+  reboot_after_update = false
+  tags                = ["data-only"]
+
   node_name = "pve"
   vm_id     = 5201
 
-  started   = false
-  on_boot   = false
-  template  = true
-  
+  started  = false
+  on_boot  = false
+  template = true
+
   disk {
     datastore_id = "local-lvm"
     interface    = "virtio0"
@@ -17,13 +18,14 @@ resource "proxmox_virtual_environment_vm" "rc_data" {
   }
 
   lifecycle {
-    ignore_changes = [ startup, cpu, memory ]
+    ignore_changes = [startup, cpu, memory]
   }
 }
 
 resource "proxmox_virtual_environment_vm" "rc" {
-  name        = "rc"
-  tags        = ["external", "noble", "ubuntu"]
+  name                = "rc"
+  reboot_after_update = true
+  tags                = ["external", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 201
@@ -31,7 +33,7 @@ resource "proxmox_virtual_environment_vm" "rc" {
 
   initialization {
     vendor_data_file_id = proxmox_virtual_environment_file.cloud_config_vdb.id
-    interface = "scsi0"
+    interface           = "scsi0"
 
     user_account {
       keys     = [trimspace(file(var.public_key_file))]
@@ -71,9 +73,9 @@ resource "proxmox_virtual_environment_vm" "rc" {
   }
 
   cpu {
-    cores         = 2
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 2
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {
@@ -114,10 +116,10 @@ resource "proxmox_virtual_environment_vm" "rc" {
   }
 
   lifecycle {
-    ignore_changes = [ clone ]
+    ignore_changes = [clone]
   }
 
-  depends_on = [ 
+  depends_on = [
     proxmox_virtual_environment_vm.rc_data,
     proxmox_virtual_environment_vm.barbie
   ]

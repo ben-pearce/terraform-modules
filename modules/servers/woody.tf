@@ -1,14 +1,15 @@
 resource "proxmox_virtual_environment_vm" "woody_data" {
-  name      = "woody-data"
-  tags      = ["data-only"]
-  
+  name                = "woody-data"
+  reboot_after_update = false
+  tags                = ["data-only"]
+
   node_name = "pve"
   vm_id     = 5200
 
-  started   = false
-  on_boot   = false
-  template  = true
-  
+  started  = false
+  on_boot  = false
+  template = true
+
   disk {
     datastore_id = "local-lvm"
     interface    = "virtio0"
@@ -17,13 +18,14 @@ resource "proxmox_virtual_environment_vm" "woody_data" {
   }
 
   lifecycle {
-    ignore_changes = [ startup, cpu, memory ]
+    ignore_changes = [startup, cpu, memory]
   }
 }
 
 resource "proxmox_virtual_environment_vm" "woody" {
-  name        = "woody"
-  tags        = ["external", "noble", "ubuntu"]
+  name                = "woody"
+  reboot_after_update = true
+  tags                = ["external", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 200
@@ -31,7 +33,7 @@ resource "proxmox_virtual_environment_vm" "woody" {
 
   initialization {
     vendor_data_file_id = proxmox_virtual_environment_file.cloud_config_vdb.id
-    interface = "scsi0"
+    interface           = "scsi0"
 
     user_account {
       keys     = [trimspace(file(var.public_key_file))]
@@ -71,9 +73,9 @@ resource "proxmox_virtual_environment_vm" "woody" {
   }
 
   cpu {
-    cores         = 6
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 6
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {
@@ -114,11 +116,11 @@ resource "proxmox_virtual_environment_vm" "woody" {
   }
 
   lifecycle {
-    ignore_changes = [ clone ]
+    ignore_changes = [clone]
   }
 
-  depends_on = [ 
+  depends_on = [
     proxmox_virtual_environment_vm.woody_data,
-    proxmox_virtual_environment_vm.barbie 
+    proxmox_virtual_environment_vm.barbie
   ]
 }
