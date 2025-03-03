@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     proxmox = {
-      source = "bpg/proxmox"
+      source  = "bpg/proxmox"
       version = "0.73.0"
     }
   }
@@ -56,7 +56,7 @@ resource "proxmox_virtual_environment_file" "cloud_config" {
   node_name    = "pve"
 
   source_raw {
-    data = file("${path.module}/snippets/ubuntu.cloud-config.yaml")
+    data      = file("${path.module}/snippets/ubuntu.cloud-config.yaml")
     file_name = "ubuntu.cloud-config.yaml"
   }
 }
@@ -67,21 +67,22 @@ resource "proxmox_virtual_environment_file" "cloud_config_vdb" {
   node_name    = "pve"
 
   source_raw {
-    data = file("${path.module}/snippets/ubuntu-vdb.cloud-config.yaml")
+    data      = file("${path.module}/snippets/ubuntu-vdb.cloud-config.yaml")
     file_name = "ubuntu-vdb.cloud-config.yaml"
   }
 }
 
 resource "proxmox_virtual_environment_vm" "debian_bookworm_template" {
-  name        = "debian-bookworm-template"
-  tags        = ["bookworm", "cloud-image", "debian"]
+  name                = "debian-bookworm-template"
+  reboot_after_update = false
+  tags                = ["bookworm", "cloud-image", "debian"]
 
   node_name = "pve"
   vm_id     = 9002
   bios      = "ovmf"
 
-  template  = true
-  started   = false
+  template = true
+  started  = false
 
   agent {
     enabled = true
@@ -94,9 +95,9 @@ resource "proxmox_virtual_environment_vm" "debian_bookworm_template" {
   }
 
   cpu {
-    cores         = 2
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 2
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {
@@ -134,7 +135,7 @@ resource "proxmox_virtual_environment_vm" "debian_bookworm_template" {
     }
 
     vendor_data_file_id = proxmox_virtual_environment_file.cloud_config.id
-    interface = "scsi0"
+    interface           = "scsi0"
   }
 
   network_device {
@@ -150,20 +151,21 @@ resource "proxmox_virtual_environment_vm" "debian_bookworm_template" {
   }
 
   lifecycle {
-    ignore_changes = [ initialization ]
+    ignore_changes = [initialization]
   }
 }
 
 resource "proxmox_virtual_environment_vm" "ubuntu_noble_template" {
-  name        = "ubuntu-noble-template"
-  tags        = ["cloud-image", "noble", "ubuntu"]
+  name                = "ubuntu-noble-template"
+  reboot_after_update = false
+  tags                = ["cloud-image", "noble", "ubuntu"]
 
   node_name = "pve"
   vm_id     = 9004
   bios      = "ovmf"
 
-  template  = true
-  started   = false
+  template = true
+  started  = false
 
   agent {
     enabled = true
@@ -176,9 +178,9 @@ resource "proxmox_virtual_environment_vm" "ubuntu_noble_template" {
   }
 
   cpu {
-    cores         = 2
-    type          = "host"
-    architecture  = "x86_64"
+    cores        = 2
+    type         = "host"
+    architecture = "x86_64"
   }
 
   memory {
@@ -216,7 +218,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_noble_template" {
     }
 
     vendor_data_file_id = proxmox_virtual_environment_file.cloud_config.id
-    interface = "scsi0"
+    interface           = "scsi0"
   }
 
   network_device {
@@ -232,7 +234,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_noble_template" {
   }
 
   lifecycle {
-    ignore_changes = [ initialization ]
+    ignore_changes = [initialization]
   }
 }
 
